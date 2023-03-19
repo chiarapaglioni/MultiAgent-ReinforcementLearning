@@ -1,5 +1,10 @@
 package agents;
 
+/**
+ *  EPSILON-GREEDY Q-LEARNING ALGORITHM
+ *
+ *  @author chiarapaglioni
+ */
 public class QLearnerEpsilon implements Agent {
 
     private double Q[], alpha, alphadecay, epsilon_decay, exploration_rate;
@@ -28,7 +33,7 @@ public class QLearnerEpsilon implements Agent {
     public int selectAction() {
         exploration_rate *= epsilon_decay;
         int index = 0;
-        // Random variable between 0 and 1
+        // Random continuous variable between 0 and 1
         double temp = Math.random();
         System.out.println("Temp: " + temp);
 
