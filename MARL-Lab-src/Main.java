@@ -17,9 +17,9 @@ public class Main {
 		
 		int cnt = 0;
 		for (int i=0; i<5; i++) {
-			Agent agent1 = (Agent) new QLearnerBoltzmann(5);
+			// Agent agent1 = (Agent) new QLearnerBoltzmann(2);
 			// Agent agent2 = (Agent) new QLearnerBoltzmann(2);
-			// Agent agent1 = (Agent) new QLearnerEpsilon(5);
+			Agent agent1 = (Agent) new QLearnerEpsilon(5);
 			Agent agent2 = (Agent) new QLearnerEpsilon(5);
 			while (cnt < 5000) {
 				int a1 = agent1.selectAction();

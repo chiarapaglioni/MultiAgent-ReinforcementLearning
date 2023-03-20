@@ -8,7 +8,6 @@ package agents;
 public class QLearnerEpsilon implements Agent {
 
     private double Q[], alpha, alphadecay, epsilon_decay, exploration_rate;
-    private int ind_max = 0;
 
     public QLearnerEpsilon(int numberOfActions) {
         Q = new double[numberOfActions];
@@ -23,7 +22,8 @@ public class QLearnerEpsilon implements Agent {
     public double actionProb(int index) {
         double prob_max = 1*(1-exploration_rate)+(1/Q.length)*exploration_rate;
         double prob_min = 0*(1-exploration_rate)+(1/Q.length)*exploration_rate;
-        if(index == ind_max){
+        if(index == getInd_max()){
+            System.out.println("Max Index: " + getInd_max());
             return prob_max;
         } else {
             return prob_min;
@@ -40,19 +40,23 @@ public class QLearnerEpsilon implements Agent {
         // If ABOVE exploration rate --> return random index
         if(temp > exploration_rate){
             index = (int) (Math.random() * Q.length);
-            // index = (int) Math.random();
 
         // If BELOW exploration rate --> return index with highest Q-Value
         } else {
-            for(int i = 0; i < Q.length; i++){
-                if(Q[i] > Q[ind_max]){
-                    ind_max = i;
-                }
-            }
-            index = ind_max;
+            index = getInd_max();
         }
-        System.out.println(index);
+        System.out.println("Index: " + index);
         return index;
+    }
+
+    public int getInd_max() {
+        int ind = 0;
+        for(int i = 0; i < Q.length; i++){
+            if(Q[i] > Q[ind]){
+                ind = i;
+            }
+        }
+        return ind;
     }
 
     public void update(int own, int other, double reward) {
