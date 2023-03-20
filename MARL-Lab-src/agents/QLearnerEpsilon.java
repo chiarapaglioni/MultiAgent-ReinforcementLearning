@@ -20,25 +20,38 @@ public class QLearnerEpsilon implements Agent {
     }
 
     // TODO: fix probabilities for visualization
+//    public double actionProb(int index) {
+//        // double temp = (1/Q.length)*exploration_rate;
+//        double temp = exploration_rate/Q.length;
+//        System.out.println(temp);
+//        double prob_max = (1 * (1-exploration_rate)) + temp;
+//        double prob_min = (0 * (1-exploration_rate)) + temp;
+//        if(index == getInd_max()){
+//            System.out.println("Max Index: " + getInd_max());
+//            System.out.println("Max Prob: " + prob_max);
+//            return prob_max;
+//        } else {
+//            System.out.println("Min Prob: " + prob_min);
+//            return prob_min;
+//        }
+//    }
+
     public double actionProb(int index) {
-        double prob_max = (1*(1-exploration_rate))+((1/Q.length)*exploration_rate);
-        double prob_min = (0*(1-exploration_rate))+((1/Q.length)*exploration_rate);
-        if(index == getInd_max()){
-            System.out.println("Max Index: " + getInd_max());
-            System.out.println("Max Prob: " + prob_max);
-            return prob_max;
-        } else {
-            System.out.println("Min Prob: " + prob_min);
-            return prob_min;
-        }
+        double sum = 0.0;
+        double action_prob;
+        for (double a : Q)
+            sum += Math.exp(a/epsilon_decay);
+        action_prob = Math.exp(Q[index]/epsilon_decay)/sum;
+        System.out.println("Action " + index + " Probability: " + action_prob);
+        return action_prob;
     }
 
     public int selectAction() {
         exploration_rate *= epsilon_decay;
-        int index = 0;
+        int index;
         // Random continuous variable between 0 and 1
         double temp = Math.random();
-        System.out.println("Temp: " + temp);
+        System.out.println("Random Value: " + temp);
 
         // If ABOVE exploration rate --> return random index
         if(temp > exploration_rate){
@@ -48,7 +61,8 @@ public class QLearnerEpsilon implements Agent {
         } else {
             index = getInd_max();
         }
-        System.out.println("Index: " + index);
+        System.out.println("Index Selected Action: " + index);
+        System.out.println();
         return index;
     }
 
