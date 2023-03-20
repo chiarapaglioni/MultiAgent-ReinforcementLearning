@@ -19,13 +19,16 @@ public class QLearnerEpsilon implements Agent {
         exploration_rate = 0.4;
     }
 
+    // TODO: fix probabilities for visualization
     public double actionProb(int index) {
-        double prob_max = 1*(1-exploration_rate)+(1/Q.length)*exploration_rate;
-        double prob_min = 0*(1-exploration_rate)+(1/Q.length)*exploration_rate;
+        double prob_max = (1*(1-exploration_rate))+((1/Q.length)*exploration_rate);
+        double prob_min = (0*(1-exploration_rate))+((1/Q.length)*exploration_rate);
         if(index == getInd_max()){
             System.out.println("Max Index: " + getInd_max());
+            System.out.println("Max Prob: " + prob_max);
             return prob_max;
         } else {
+            System.out.println("Min Prob: " + prob_min);
             return prob_min;
         }
     }
